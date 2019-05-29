@@ -37,10 +37,7 @@ macro m1 {
     //  $(..).has()         :   $(..).Has()
     exec = <<JS
         exports = {
-            usd: {
-                buy: parseFloat($('.td1 #txtBanKNote_BuyPrice').Attr('value')),
-                sell: parseFloat($('.td1 #txtBanKNote_SellPrice').Attr('value')),
-            }
+            title: $("title").Text()
         }
     JS
 }
