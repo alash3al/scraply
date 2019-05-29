@@ -54,7 +54,7 @@ aggregators {
 
 Why?
 ====
-> I wanted a simple tool that fetches the required information in a simple and neat way from web pages, I'm using it in the following cases:
+> I wanted a simple tool that fetches the required information in a simple way from web pages, I'm using it in the following cases:
 
 - Scraping data from currency rates websites
 - Scraping product pricing data from e-commerce sites
