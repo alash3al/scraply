@@ -15,12 +15,13 @@ macro m1 {
     // cache [time to live] in seconds
     ttl = 120
 
-    // code to execute
+    // code to be executed
+    //
     // this is a javascript code
     // you must set your returns in the exports variable
     // there is two global variables available there `document` and $
     // `document` is the DOM object you use to work with the DOM
-    // `$` is like jQuery, it will help you to select anything from the document
+    // `$` similar to jQuery's `$`, just look at the following comparison
     //
     //  jQuery              :   Scraply
     //  -------------           ---------------
