@@ -45,7 +45,7 @@ macro m1 {
     JS
 }
 
-# aggregators enables you to call multiple macros in just one call!
+# aggregators enable you to call multiple macros in just one call!
 aggregators {
     # /aggregators/exec/all
     all = ["m1"]
