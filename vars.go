@@ -7,8 +7,8 @@ import (
 )
 
 var (
-	flagHTTPAddr = flag.String("http", ":9080", "the http listening address")
-	flagConfigs  = flag.String("configs", "hntly.hcl", "the configurations to be loaded")
+	flagHTTPAddr = flag.String("listen", ":9080", "the http listening address")
+	flagConfigs  = flag.String("configs", "scraply.hcl", "the configurations to be loaded")
 )
 
 var (
