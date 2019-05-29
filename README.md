@@ -19,7 +19,7 @@ macro m1 {
     //
     // this is a javascript code
     // you must set your returns in the exports variable
-    // there is two global variables available there `document` and $
+    // there are two global variables available there `document` and $
     // `document` is the DOM object you use to work with the DOM
     // `$` similar to jQuery's `$`, just look at the following comparison
     //
