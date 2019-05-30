@@ -7,21 +7,32 @@ Overview
 ```hcl
 # this is the configurations file [sample]
 
-# /macros/exec/m1
-macro m1 {
+# /macros/exec/scraply
+macro scraply {
     // the url to scrap
-    url = "http://webpage.url/here"
+    // we will scrap scraply github page and get information from it
+    url = "https://github.com/alash3al/scraply"
 
     // cache [time to live] in seconds
+    // we will cache our results (120 second)
     ttl = 120
 
     // code to be executed
     //
     // this is a javascript code
     // you must set your returns in the exports variable
-    // there are two global variables available there `document` and $
-    // `document` is the DOM object you use to work with the DOM
-    // `$` similar to jQuery's `$`, just look at the following comparison
+    exec = <<JS
+        exports = {
+            // fetching the title
+            // similar to jQuery, right?
+            title: $("title").Text()
+        }
+    JS
+
+    // our $(..).Method() is just like jQuery's $(..).method()
+    // our $(..).Method() is an alias for document.Find(..).Method()
+    // 
+    // here is a table shows you jQuery methods and scraply Methods:
     //
     //  jQuery              :   Scraply
     //  -------------           ---------------
@@ -30,22 +41,43 @@ macro m1 {
     //  $(..).text()        :   $(..).Text()
     //  $(..).last()        :   $(..).Last()
     //  $(..).find()        :   $(..).Find()
-    //  $(..).attr()        :   $(..).Attr()
+    //  $(..).attr()        :   $(..).Attr() | $(..).AttrOr(needle, defaultValue)
     //  $(..).children()    :   $(..).Children()
     //  $(..).prev()        :   $(..).Prev()
     //  $(..).next()        :   $(..).Next()
     //  $(..).has()         :   $(..).Has()
+}
+
+macro sqler {
+    url = "https://github.com/alash3al/sqler"
+    ttl = 120
     exec = <<JS
         exports = {
-            title: $("title").Text()
+            title: $('title').Text(),
+            description: $('meta[name="description"]').AttrOr('content', '')
         }
     JS
 }
 
-# aggregators enable you to call multiple macros in just one call!
+macro redix {
+    url = "https://github.com/alash3al/redix"
+    ttl = 120
+    exec = <<JS
+        exports = {
+            title: $('title').Text(),
+            description: $('meta[name="description"]').AttrOr('content', '')
+        }
+    JS
+}
+
+# aggregators enables you to call multiple macros in just one call!
 aggregators {
-    # /aggregators/exec/all
-    all = ["m1"]
+    # /aggregators/exec/projects
+    projects = [
+        "scraply",
+        "sqler",
+        "redix"
+    ]
 }
 ```
 
