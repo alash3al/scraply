@@ -48,6 +48,7 @@ macro scraply {
     //  $(..).has()         :   $(..).Has()
 }
 
+# /macros/exec/sqler
 macro sqler {
     url = "https://github.com/alash3al/sqler"
     ttl = 120
@@ -59,6 +60,7 @@ macro sqler {
     JS
 }
 
+# /macros/exec/redix
 macro redix {
     url = "https://github.com/alash3al/redix"
     ttl = 120
@@ -96,4 +98,3 @@ How?
 - Download the binary that fits your OS from [here](https://github.com/alash3al/scraply/releases)
 - Create a configuration file i.e `scraply.hcl`
 - Run scrapply `./path/to/downloaded/scrapply --config=./scraply.hcl --listen=:9080`
-
