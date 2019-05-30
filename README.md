@@ -14,7 +14,6 @@ macro scraply {
     url = "https://github.com/alash3al/scraply"
 
     // cache [time to live] in seconds
-    // we will cache our results (120 second)
     ttl = 120
 
     // code to be executed
@@ -25,7 +24,8 @@ macro scraply {
         exports = {
             // fetching the title
             // similar to jQuery, right?
-            title: $("title").Text()
+            title: $("title").Text(),
+            description: $('meta[name=description]').AttrOr('content', '')
         }
     JS
 

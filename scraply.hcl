@@ -4,7 +4,7 @@ macro scraply {
     exec = <<JS
         exports = {
             title: $('title').Text(),
-            description: $('meta[name="description"]').AttrOr('content', '')
+            description: $('meta[name=description]').AttrOr('content', '')
         }
     JS
 }
@@ -15,7 +15,7 @@ macro sqler {
     exec = <<JS
         exports = {
             title: $('title').Text(),
-            description: $('meta[name="description"]').AttrOr('content', '')
+            description: $('meta[name=description]').AttrOr('content', '')
         }
     JS
 }
@@ -26,7 +26,7 @@ macro redix {
     exec = <<JS
         exports = {
             title: $('title').Text(),
-            description: $('meta[name="description"]').AttrOr('content', '')
+            description: $('meta[name=description]').AttrOr('content', '')
         }
     JS
 }
