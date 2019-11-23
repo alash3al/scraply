@@ -56,6 +56,11 @@ macro scraply {
     //  $(..).prev()        :   $(..).Prev()
     //  $(..).next()        :   $(..).Next()
     //  $(..).has()         :   $(..).Has()
+
+    // also you have the following functions in js context
+    // println()/console.log()
+    // time() the current timestamp
+    // sleep(ms) sleep the execution for x of milliseconds
 }
 
 # /macros/exec/sqler
