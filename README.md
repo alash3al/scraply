@@ -29,6 +29,16 @@ macro scraply {
         }
     JS
 
+    // schedule this macro to run at the specified cron style spec
+    schedule = "* * * * *"
+
+    // notify an endpoint with the result
+    // the payload is a json object just like: {"error": "an error if any", "result": "the result will be here"}
+    webhook = "http://some.endpoint.com"
+
+    // whether you don't want to expose this macro to the api or not
+    private = true
+
     // our $(..).Method() is just like jQuery's $(..).method()
     // our $(..).Method() is an alias for document.Find(..).Method()
     // 

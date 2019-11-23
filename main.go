@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/labstack/echo/middleware"
+	"log"
 
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 func main() {
@@ -14,6 +14,7 @@ func main() {
 
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{Level: 9}))
+	e.Use(middleware.Recover())
 
 	e.GET("/", func(c echo.Context) error {
 		return c.JSON(200, map[string]interface{}{
@@ -22,6 +23,19 @@ func main() {
 	})
 
 	e.GET("/macros/exec/:macro", func(c echo.Context) error {
+		m := configs.Macros[c.Param("macro")]
+		if nil == m {
+			return c.JSON(404, map[string]string{
+				"error": "not found",
+			})
+		}
+
+		if m.Private {
+			return c.JSON(403, map[string]string{
+				"error": "you don't have permission to access this resource",
+			})
+		}
+
 		res, cached, err := execMacro(c.Param("macro"))
 		if err != nil {
 			return c.JSON(500, map[string]string{
@@ -51,6 +65,11 @@ func main() {
 		errs := map[string]string{}
 
 		for _, m := range agg {
+			macro := configs.Macros[c.Param("macro")]
+			if macro == nil || macro.Private {
+				continue
+			}
+
 			res, _, err := execMacro(m)
 
 			if nil != err {
@@ -71,5 +90,5 @@ func main() {
 		})
 	})
 
-	e.Start(*flagHTTPAddr)
+	log.Fatal(e.Start(*flagHTTPAddr))
 }
