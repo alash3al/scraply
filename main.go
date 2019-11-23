@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -14,7 +15,7 @@ func main() {
 
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{Level: 9}))
-	e.Use(middleware.Recover())
+	// e.Use(middleware.Recover())
 
 	e.GET("/", func(c echo.Context) error {
 		return c.JSON(200, map[string]interface{}{
@@ -45,6 +46,13 @@ func main() {
 
 		if cached {
 			c.Response().Header().Set("X-Cached-Version", "true")
+		}
+
+		if _, err := json.Marshal(res); err != nil {
+			return c.JSON(500, map[string]interface{}{
+				"error":   err.Error(),
+				"payload": fmt.Sprintf("%v", res),
+			})
 		}
 
 		return c.JSON(200, map[string]interface{}{

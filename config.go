@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
+	"log"
 	"path/filepath"
 	"strings"
 
@@ -43,13 +43,15 @@ func ParseHCL(filename string) (*Config, error) {
 					}
 
 					if m.Webhook != "" {
-						resp, err := resty.New().R().
+						_, err := resty.New().R().
 							SetHeader("Content-Type", "application/json").
 							SetBody(map[string]interface{}{
 								"error":  errStr,
 								"result": val,
 							}).Post(m.Webhook)
-						fmt.Println(resp, err)
+						if err != nil {
+							log.Printf("error calling the webhook(%s) due to error(%s) with payload(%v)\n", m.Webhook, err.Error(), val)
+						}
 					}
 				})
 
