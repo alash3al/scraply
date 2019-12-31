@@ -31,11 +31,11 @@ macro redix {
     JS
 }
 
-# aggregators enables you to call multiple macros in just one call!
-aggregators {
-    projects = [
-        "scraply",
-        "sqler",
-        "redix"
-    ]
+macro all {
+    exec = <<JS
+        exports = {
+            redis: macro("redix"),
+            sqler: macro("sqler")
+        }
+    JS
 }

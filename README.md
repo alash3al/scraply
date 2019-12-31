@@ -1,12 +1,11 @@
 Scraply
 ========
-> Scraply a simple dom scraper to fetch information from any html based website and convert that info to JSON APIs
+> Scraply a simple dom scraper to fetch information from any html based website using `jQuery` like syntax and convert that info to JSON APIs
 
-Overview
-=======
+How it works?
+==============
+> it works by simple define some `macros`/`endpoints` in `HCL` format, and let the magic begins, here is an example:
 ```hcl
-# this is the configurations file [sample]
-
 # /macros/exec/scraply
 macro scraply {
     // the url to scrap
@@ -14,6 +13,7 @@ macro scraply {
     url = "https://github.com/alash3al/scraply"
 
     // cache [time to live] in seconds
+    // set it to any value < 1 to disable it.
     ttl = 120
 
     // code to be executed
@@ -30,7 +30,9 @@ macro scraply {
     JS
 
     // schedule this macro to run at the specified cron style spec
-    schedule = "* * * * *"
+    // it extends the cronjob with an additional field in the first
+    // to supports seconds.
+    schedule = "* * * * * *"
 
     // notify an endpoint with the result
     // the payload is a json object just like: {"error": "an error if any", "result": "the result will be here"}
@@ -61,6 +63,7 @@ macro scraply {
     // println()/console.log()
     // time() the current timestamp
     // sleep(ms) sleep the execution for x of milliseconds
+    // macro(macro_name) executes the specified macro name and return its result
 }
 
 # /macros/exec/sqler
@@ -87,14 +90,14 @@ macro redix {
     JS
 }
 
-# aggregators enables you to call multiple macros in just one call!
-aggregators {
-    # /aggregators/exec/projects
-    projects = [
-        "scraply",
-        "sqler",
-        "redix"
-    ]
+# aggregate ?
+macro all {
+    exec = <<JS
+        exports = {
+            redis: macro("redix"),
+            sqler: macro("sqler")
+        }
+    JS
 }
 ```
 
@@ -107,6 +110,12 @@ Why?
 - Scraping news from news websites
 - Scraping search data
 - there are more use cases ...
+
+Features
+========
+- Tiny & Portable Engine.
+- You can scale & distribute it easily.
+- 
 
 How?
 ====

@@ -12,8 +12,7 @@ import (
 
 // Config ...
 type Config struct {
-	Macros      map[string]*Macro   `hcl:"macro"`
-	Aggragators map[string][]string `hcl:"aggregators"`
+	Macros map[string]*Macro `hcl:"macro"`
 }
 
 // ParseHCL ...
@@ -70,8 +69,7 @@ func ParseHCL(filename string) (*Config, error) {
 // ParseHCLGlob load configs from the specified glob pattern
 func ParseHCLGlob(pattern string) (*Config, error) {
 	config := Config{
-		Aggragators: map[string][]string{},
-		Macros:      map[string]*Macro{},
+		Macros: map[string]*Macro{},
 	}
 
 	files, err := filepath.Glob(pattern)
@@ -84,14 +82,9 @@ func ParseHCLGlob(pattern string) (*Config, error) {
 		if err != nil {
 			return nil, err
 		}
-		for k, v := range sub.Aggragators {
-			if _, ok := config.Aggragators[k]; !ok {
-				config.Aggragators[k] = []string{}
-			}
-			config.Aggragators[k] = append(config.Aggragators[k], v...)
-		}
 
 		for k, v := range sub.Macros {
+			v.config = &config
 			config.Macros[k] = v
 		}
 	}
