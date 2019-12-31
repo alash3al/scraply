@@ -6,7 +6,7 @@ How it works?
 ==============
 > it works by simple define some `macros`/`endpoints` in `HCL` format, and let the magic begins, here is an example:
 ```hcl
-# /macros/exec/scraply
+# /scraply
 macro scraply {
     // the url to scrap
     // we will scrap scraply github page and get information from it
@@ -66,7 +66,7 @@ macro scraply {
     // macro(macro_name) executes the specified macro name and return its result
 }
 
-# /macros/exec/sqler
+# /sqler
 macro sqler {
     url = "https://github.com/alash3al/sqler"
     ttl = 120
@@ -78,7 +78,7 @@ macro sqler {
     JS
 }
 
-# /macros/exec/redix
+# /redix
 macro redix {
     url = "https://github.com/alash3al/redix"
     ttl = 120

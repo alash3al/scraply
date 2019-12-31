@@ -15,7 +15,7 @@ func main() {
 
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{Level: 9}))
-	// e.Use(middleware.Recover())
+	e.Use(middleware.Recover())
 
 	e.GET("/", func(c echo.Context) error {
 		return c.JSON(200, map[string]interface{}{
