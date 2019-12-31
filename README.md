@@ -126,3 +126,18 @@ How?
 - Download the binary that fits your OS from [here](https://github.com/alash3al/scraply/releases)
 - Create a configuration file i.e `scraply.hcl`
 - Run scrapply `./path/to/downloaded/scrapply --config=./scraply.hcl --listen=:9080`
+
+Usage
+=====
+- Download binaries from [here](https://github.com/alash3al/scraply/releases)
+
+```bash
+# let's assume that you downloaded
+# goto the the downloads directory
+# then extract it
+# then create your macros file i.e `example.scraply.hcl`
+# then execute this command
+$ ./scraply_linux_amd64
+# you will see something like this, saying that everything is running under http://<yourhost>:9080/
+⇨ http server started on [::]:9080
+```
