@@ -115,7 +115,11 @@ Features
 ========
 - Tiny & Portable Engine.
 - You can scale & distribute it easily.
-- 
+- Private/Public Macros.
+- Cron like scheduler.
+- Webhook Support.
+- jQuery like API.
+- Customize everythin in javascript.
 
 How?
 ====
