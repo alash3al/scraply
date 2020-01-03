@@ -21,31 +21,44 @@ type Macro struct {
 }
 
 // Exec ...
-func (m *Macro) Exec() (interface{}, error) {
+func (m *Macro) Exec(params map[string]interface{}) (interface{}, error) {
 	if m.URL != "" {
-		return m.execURL()
+		return m.execURL(params)
 	}
 
-	return m.execCodeOnly()
+	return m.execCodeOnly(params)
 }
 
 // execCodeOnly ...
-func (m *Macro) execCodeOnly() (interface{}, error) {
-	return m.execJS(nil)
+func (m *Macro) execCodeOnly(params map[string]interface{}) (interface{}, error) {
+	return m.execJS(map[string]interface{}{
+		"scraply": map[string]interface{}{
+			"params": params,
+		},
+	})
 }
 
 // Exec ...
-func (m *Macro) execURL() (interface{}, error) {
+func (m *Macro) execURL(params map[string]interface{}) (interface{}, error) {
 	doc, err := goquery.NewDocument(m.URL)
 	if err != nil {
 		return nil, err
 	}
 
-	return m.execJS(map[string]interface{}{"document": doc})
+	return m.execJS(map[string]interface{}{
+		"document": doc,
+		"scraply": map[string]interface{}{
+			"params": params,
+		},
+	})
 }
 
 func (m *Macro) execJS(ctx map[string]interface{}) (interface{}, error) {
 	vm := goja.New()
+
+	for k, v := range ctx {
+		vm.Set(k, v)
+	}
 
 	vm.Set("println", fmt.Println)
 	vm.Set("fetch", goquery.NewDocument)
@@ -53,23 +66,19 @@ func (m *Macro) execJS(ctx map[string]interface{}) (interface{}, error) {
 		return time.Now().Unix()
 	})
 
-	vm.Set("macro", func(macroName string) (interface{}, error) {
+	vm.Set("macro", func(macroName string, params map[string]interface{}) (interface{}, error) {
 		m := m.config.Macros[macroName]
 
 		if m == nil {
 			return nil, errors.New(macroName + " : macro not found")
 		}
 
-		return m.Exec()
+		return m.Exec(params)
 	})
 
 	vm.Set("sleep", func(ms int) {
 		time.Sleep(time.Duration(ms) * time.Millisecond)
 	})
-
-	for k, v := range ctx {
-		vm.Set(k, v)
-	}
 
 	vm.RunString(`
 		var console = {log: println};
@@ -80,6 +89,8 @@ func (m *Macro) execJS(ctx map[string]interface{}) (interface{}, error) {
 			}
 			return document.Find(s);
 		};
+
+		scraply.macro = macro;
 	`)
 
 	if _, err := vm.RunString(m.Code); err != nil {

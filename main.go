@@ -38,7 +38,12 @@ func main() {
 			})
 		}
 
-		res, cached, err := execMacro(c.Param("macro"))
+		params := map[string]interface{}{}
+		for k := range c.QueryParams() {
+			params[k] = c.QueryParam(k)
+		}
+
+		res, cached, err := execMacro(c.Param("macro"), params)
 		if err != nil {
 			return c.JSON(500, map[string]string{
 				"error": err.Error(),

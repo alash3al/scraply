@@ -33,9 +33,10 @@ macro redix {
 
 macro all {
     exec = <<JS
+        // console.log(scraply.params)
         exports = {
-            redis: macro("redix"),
-            sqler: macro("sqler")
+            redis: scraply.macro("redix", scraply.params),
+            sqler: scraply.macro("sqler", scraply.params)
         }
     JS
 }

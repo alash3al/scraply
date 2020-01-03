@@ -63,7 +63,9 @@ macro scraply {
     // println()/console.log()
     // time() the current timestamp
     // sleep(ms) sleep the execution for x of milliseconds
-    // macro(macro_name) executes the specified macro name and return its result
+    // macro(macro_name, paramsObject) executes the specified macro name and return its result
+    // scraply.macro(...) an alias for macro(...)
+    // scraply.params is an object containing the current request GET query params
 }
 
 # /sqler
