@@ -63,6 +63,7 @@ macro scraply {
     // println()/console.log()
     // time() the current timestamp
     // sleep(ms) sleep the execution for x of milliseconds
+    // fetch(url), i.e fetch(url).Find("selector")....
     // macro(macro_name, paramsObject) executes the specified macro name and return its result
     // scraply.macro(...) an alias for macro(...)
     // scraply.params is an object containing the current request GET query params
