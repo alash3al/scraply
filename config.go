@@ -35,6 +35,7 @@ func ParseHCL(filename string) (*Config, error) {
 		if m.Schedule != "" {
 			err := (func(n string, m *Macro) error {
 				_, err := scheduler.AddFunc(m.Schedule, func() {
+					log.Printf("=> Executing (%s) ...", n)
 					val, err := m.Exec(nil)
 					errStr := ""
 					if err != nil {
