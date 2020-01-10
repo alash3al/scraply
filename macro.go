@@ -42,7 +42,7 @@ func (m *Macro) triggerWebhook(val interface{}, err error) {
 	}
 
 	if m.Webhook != "" {
-		_, err := resty.New().R().
+		resp, err := resty.New().R().
 			SetHeader("Content-Type", "application/json").
 			SetBody(map[string]interface{}{
 				"error":  errStr,
@@ -50,6 +50,8 @@ func (m *Macro) triggerWebhook(val interface{}, err error) {
 			}).Post(m.Webhook)
 		if err != nil {
 			log.Printf("error calling the webhook(%s) due to error(%s) with payload(%v)\n", m.Webhook, err.Error(), val)
+		} else if resp.StatusCode() != 200 {
+			log.Printf("error calling the webhook(%s) I got (%s)\n", m.Webhook, string(resp.Body()))
 		}
 	}
 }
