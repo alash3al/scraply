@@ -2,11 +2,9 @@ package main
 
 import (
 	"io/ioutil"
-	"log"
 	"path/filepath"
 	"strings"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/hashicorp/hcl"
 )
 
@@ -35,24 +33,7 @@ func ParseHCL(filename string) (*Config, error) {
 		if m.Schedule != "" {
 			err := (func(n string, m *Macro) error {
 				_, err := scheduler.AddFunc(m.Schedule, func() {
-					log.Printf("=> Executing (%s) ...", n)
-					val, err := m.Exec(nil)
-					errStr := ""
-					if err != nil {
-						errStr = err.Error()
-					}
-
-					if m.Webhook != "" {
-						_, err := resty.New().R().
-							SetHeader("Content-Type", "application/json").
-							SetBody(map[string]interface{}{
-								"error":  errStr,
-								"result": val,
-							}).Post(m.Webhook)
-						if err != nil {
-							log.Printf("error calling the webhook(%s) due to error(%s) with payload(%v)\n", m.Webhook, err.Error(), val)
-						}
-					}
+					m.Exec(nil)
 				})
 
 				return err

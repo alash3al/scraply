@@ -3,10 +3,12 @@ package main
 import (
 	"errors"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/dop251/goja"
+	"github.com/go-resty/resty/v2"
 )
 
 // Macro ...
@@ -21,12 +23,35 @@ type Macro struct {
 }
 
 // Exec ...
-func (m *Macro) Exec(params map[string]interface{}) (interface{}, error) {
+func (m *Macro) Exec(params map[string]interface{}) (val interface{}, err error) {
 	if m.URL != "" {
-		return m.execURL(params)
+		val, err = m.execURL(params)
+	} else {
+		val, err = m.execCodeOnly(params)
 	}
 
-	return m.execCodeOnly(params)
+	go m.triggerWebhook(val, err)
+
+	return val, err
+}
+
+func (m *Macro) triggerWebhook(val interface{}, err error) {
+	var errStr string
+	if err != nil {
+		errStr = err.Error()
+	}
+
+	if m.Webhook != "" {
+		_, err := resty.New().R().
+			SetHeader("Content-Type", "application/json").
+			SetBody(map[string]interface{}{
+				"error":  errStr,
+				"result": val,
+			}).Post(m.Webhook)
+		if err != nil {
+			log.Printf("error calling the webhook(%s) due to error(%s) with payload(%v)\n", m.Webhook, err.Error(), val)
+		}
+	}
 }
 
 // execCodeOnly ...
