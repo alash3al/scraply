@@ -16,6 +16,9 @@ macro scraply {
     // set it to any value < 1 to disable it.
     ttl = 120
 
+    // automatically set cookie jar
+    cookie_jar = true
+
     // code to be executed
     //
     // this is a javascript code

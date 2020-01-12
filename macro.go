@@ -95,6 +95,10 @@ func (m *Macro) fetchURL(url string) (interface{}, error) {
 	}
 
 	client.SetDoNotParseResponse(true)
+	client.SetHeader("User-Agent", fmt.Sprintf(
+		"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Scraply/%s Chrome/79.0.3945.117 Safari/537.36",
+		VERSION,
+	))
 
 	resp, err := client.R().SetHeader("Referrer", url).Get(url)
 	if err != nil {
