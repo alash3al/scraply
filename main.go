@@ -66,5 +66,6 @@ func main() {
 		})
 	})
 
+	log.Println("⇨ running scraply version", VERSION, "...")
 	log.Fatal(e.Start(*flagHTTPAddr))
 }

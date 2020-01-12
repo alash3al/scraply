@@ -20,5 +20,6 @@ var (
 )
 
 const (
+	// VERSION scraply version
 	VERSION = "2.2"
 )
