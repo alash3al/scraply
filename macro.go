@@ -4,22 +4,25 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net/http/cookiejar"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/dop251/goja"
 	"github.com/go-resty/resty/v2"
+	"golang.org/x/net/publicsuffix"
 )
 
 // Macro ...
 type Macro struct {
-	URL      string `hcl:"url"`
-	Code     string `hcl:"exec"`
-	TTL      int64  `hcl:"ttl"`
-	Schedule string `hcl:"schedule"`
-	Webhook  string `hcl:"webhook"`
-	Private  bool   `hcl:"private"`
-	config   *Config
+	URL       string `hcl:"url"`
+	Code      string `hcl:"exec"`
+	TTL       int64  `hcl:"ttl"`
+	Schedule  string `hcl:"schedule"`
+	Webhook   string `hcl:"webhook"`
+	Private   bool   `hcl:"private"`
+	CookieJar bool   `hcl:"cookie_jar"`
+	config    *Config
 }
 
 // Exec ...
@@ -67,7 +70,7 @@ func (m *Macro) execCodeOnly(params map[string]interface{}) (interface{}, error)
 
 // Exec ...
 func (m *Macro) execURL(params map[string]interface{}) (interface{}, error) {
-	doc, err := goquery.NewDocument(m.URL)
+	doc, err := m.fetchURL(m.URL)
 	if err != nil {
 		return nil, err
 	}
@@ -80,6 +83,27 @@ func (m *Macro) execURL(params map[string]interface{}) (interface{}, error) {
 	})
 }
 
+func (m *Macro) fetchURL(url string) (interface{}, error) {
+	client := resty.New()
+
+	if m.CookieJar {
+		jar, err := cookiejar.New(&cookiejar.Options{PublicSuffixList: publicsuffix.List})
+		if err != nil {
+			return nil, err
+		}
+		client.SetCookieJar(jar)
+	}
+
+	client.SetDoNotParseResponse(true)
+
+	resp, err := client.R().SetHeader("Referrer", url).Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	return goquery.NewDocumentFromResponse(resp.RawResponse)
+}
+
 func (m *Macro) execJS(ctx map[string]interface{}) (interface{}, error) {
 	vm := goja.New()
 
@@ -88,7 +112,7 @@ func (m *Macro) execJS(ctx map[string]interface{}) (interface{}, error) {
 	}
 
 	vm.Set("println", fmt.Println)
-	vm.Set("fetch", goquery.NewDocument)
+	vm.Set("fetch", m.fetchURL)
 	vm.Set("time", func() int64 {
 		return time.Now().Unix()
 	})

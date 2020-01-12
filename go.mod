@@ -16,6 +16,7 @@ require (
 	github.com/robfig/cron/v3 v3.0.0
 	github.com/valyala/fasttemplate v1.1.0 // indirect
 	golang.org/x/crypto v0.0.0-20191122220453-ac88ee75c92c // indirect
+	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553
 	golang.org/x/text v0.3.2 // indirect
 	gopkg.in/yaml.v2 v2.2.7 // indirect
 )
