@@ -18,3 +18,7 @@ var (
 
 	scheduler = cron.New(cron.WithSeconds(), cron.WithChain(cron.SkipIfStillRunning(cron.DefaultLogger)))
 )
+
+const (
+	VERSION = "2.2"
+)
