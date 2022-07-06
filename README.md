@@ -42,3 +42,7 @@ $ curl http://localhost:8010/extract \
     -s \
     -d '{"url": "https://github.com/alash3al/scraply", "extractors": {"title": "$(\"title\").text()"}, "return_body": false, "user_agent": "CustomeUserAgent"}'
 ```
+
+Download?
+=========
+> you can go to the [releases page](https://github.com/alash3al/scraply/releases) and pick the latest version.
