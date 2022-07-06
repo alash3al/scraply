@@ -46,6 +46,7 @@ $ curl http://localhost:8010/extract \
 Download ?
 ==========
 > you can go to the [releases page](https://github.com/alash3al/scraply/releases) and pick the latest version.
+> or you can `$ docker run --rm -it ghcr.io/alash3al/scraply scraply help`
 
 
 Contribution ?
