@@ -43,6 +43,21 @@ $ curl http://localhost:8010/extract \
     -d '{"url": "https://github.com/alash3al/scraply", "extractors": {"title": "$(\"title\").text()"}, "return_body": false, "user_agent": "CustomeUserAgent"}'
 ```
 
-Download?
-=========
+Download ?
+==========
 > you can go to the [releases page](https://github.com/alash3al/scraply/releases) and pick the latest version.
+
+
+Contribution ?
+==============
+> for sure you can contribute, how?
+
+- clone the repo
+- create your fix/feature branch
+- create a pull request
+
+nothing else, enjoy!
+
+About
+=====
+> I'm [Mohamed Al Ashaal](https://alash3al.com), a software engineer :)
