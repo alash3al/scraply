@@ -1,5 +1,5 @@
-Simple Scraping Tool
-======================
+Scraply
+========
 > Scraply, is a very simple html scraping tool, if you know css & jQuery then you can use it!
 
 Overview
