@@ -21,7 +21,7 @@ $ scraply extract \
     -x title="select('title').text()" \
     -x description="select('meta[name=description]').attr('content')"
 
-# same thing but with asking scraply to return the response body for debuging purposes
+# same thing but with asking scraply to return the response body for debugging purposes
 $ scraply extract \
     --return-body \
     -u "https://github.com/alash3al/scraply" \
