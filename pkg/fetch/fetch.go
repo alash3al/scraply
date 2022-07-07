@@ -11,6 +11,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/dop251/goja"
+	"github.com/dop251/goja/parser"
 )
 
 // Input the input used for fetching the requested data
@@ -80,6 +81,8 @@ func Do(ctx context.Context, input Input) (*Output, error) {
 
 	jsvm := goja.New()
 	jsvm.SetFieldNameMapper(goja.UncapFieldNameMapper())
+	jsvm.SetParserOptions(parser.WithDisableSourceMaps)
+
 	jsvm.Set("$", dom.Find)
 	jsvm.Set("select", dom.Find)
 

@@ -66,6 +66,20 @@ func main() {
 		},
 	})
 
+	app.Commands = append(app.Commands, &cli.Command{
+		Name:        "shell",
+		Description: "a very simple js shell for debugging purposes",
+		Action:      commands.Shell(),
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:     "url",
+				Aliases:  []string{"u"},
+				Required: true,
+				Usage:    "the page url to inspect",
+			},
+		},
+	})
+
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}

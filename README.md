@@ -43,6 +43,25 @@ $ curl http://localhost:8010/extract \
     -d '{"url": "https://github.com/alash3al/scraply", "extractors": {"title": "$(\"title\").text()"}, "return_body": false, "user_agent": "CustomeUserAgent"}'
 ```
 
+> for dubugging, there is `shell`
+```bash
+$ scraply shell -u https://github.com/alash3al/scraply
+➜ (scraply) > $("title").text()
+GitHub - alash3al/scraply: Scraply a simple dom scraper to fetch information from any html based website and convert that info to JSON APIs
+
+➜ (scraply) > request.url
+https://github.com/alash3al/scraply
+
+➜ (scraply) > response.status_code
+200
+
+➜ (scraply) > response.url
+https://github.com/alash3al/scraply
+
+➜ (scraply) > response.body
+<html>.....
+```
+
 Download ?
 ==========
 > you can go to the [releases page](https://github.com/alash3al/scraply/releases) and pick the latest version.
