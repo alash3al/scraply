@@ -43,7 +43,7 @@ $ curl http://localhost:8010/extract \
     -d '{"url": "https://github.com/alash3al/scraply", "extractors": {"title": "$(\"title\").text()"}, "return_body": false, "user_agent": "CustomeUserAgent"}'
 ```
 
-> for dubugging, there is `shell`
+> for debugging, there is `shell`
 ```bash
 $ scraply shell -u https://github.com/alash3al/scraply
 ➜ (scraply) > $("title").text()
