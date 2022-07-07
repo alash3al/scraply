@@ -11,22 +11,22 @@ Overview
 # extracting the title and the description from scraply github repo page
 $ scraply extract \
     -u "https://github.com/alash3al/scraply" \
-    -x title="select('title').text()" \
-    -x description="select('meta[name=description]').attr('content')"
+    -x title='$("title").text()' \
+    -x description='$("meta[name=description]").attr("content")'
 
 # same thing but with custom user agent
 $ scraply extract \
     -u "https://github.com/alash3al/scraply" \
     -ua "OptionalCustomUserAgent"\
-    -x title="select('title').text()" \
-    -x description="select('meta[name=description]').attr('content')"
+    -x title='$("title").text()' \
+    -x description='$("meta[name=description]").attr("content")'
 
 # same thing but with asking scraply to return the response body for debugging purposes
 $ scraply extract \
     --return-body \
     -u "https://github.com/alash3al/scraply" \
-    -x title="select('title').text()" \
-    -x description="select('meta[name=description]').attr('content')"
+    -x title='$("title").text()' \
+    -x description='$("meta[name=description]").attr("content")'
 ```
 
 > for `http` usage, we will run the http server then using any http client to interact with it.  
