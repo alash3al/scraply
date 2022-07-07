@@ -1,6 +1,6 @@
 Scraply
 ========
-> Scraply, is a very simple html scraping tool, if you know css & jQuery then you can use it!
+> Scraply, is a very simple html scraping tool, if you know css & jQuery then you can use it!, scraply should be simple and tiny as well it could be used as a component in a large system something like [this use-case](https://github.com/alash3al/scraply/issues/1#issuecomment-570082314)
 
 Overview
 ========
